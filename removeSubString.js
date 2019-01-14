@@ -55,4 +55,4 @@ function remove( matchString, fromText) {
 }
 
 console.log( remove("Athanas", "Chris Athanas") ); // => "Chris "
-console.log( remove("ABC", "ABCXYZABCABC")); // => "XYZ"
+console.log( remove("ABC", "ABCXYZABCABC")); // => "XYZ" 
