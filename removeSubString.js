@@ -17,6 +17,7 @@ function remove( matchString, fromText) {
   let matchChar = 0;
   let foundMatch = false;
   let matchCount = 0;
+  let matchStart = 0;
 
 //   do {
     foundMatch = false;
@@ -25,12 +26,13 @@ function remove( matchString, fromText) {
     
     while( i < fromText.length && foundMatch == false) {
       if(fromText[i] === matchString[i] ) {
+        matchStart = matchCount === 0 ? i : matchStart;
         matchCount++;
         if(matchCount >= matchString.length) {
           // we have a match
           foundMatch = true;
-          fromText = fromText.slice(0, matchIdx) 
-            + fromText.slice(matchIdx, matchIdx + matchCount);
+          fromText = fromText.slice(0, Math.max(0,matchStart-1)) 
+            + fromText.slice(matchIdx+1, fromText.length);
         }
       } else {
         matchIdx = i;
