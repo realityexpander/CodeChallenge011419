@@ -1,14 +1,16 @@
+// From XTivia
+// Installed npm packages: jquery underscore request express
+// jade shelljs passport http sys lodash async mocha chai sinon
+// sinon-chai moment connect validator restify ejs ws co when
+// helmet wrench brain mustache should backbone forever debug jsdom
 
-var textToRemove = "ABC";
-var fromText = "ABCDEF";
 
+function remove( matchString, fromText) {
 
-function remove( textToRemove, fromText) {
-
-  if(textToRemove === undefined)
+  if(matchString === undefined)
     return fromText;
 
-  textToRemove = textToRemove.split("");
+  matchString = matchString.split("");
   fromText = fromText.split("");
 
   let i = 0;
@@ -16,28 +18,33 @@ function remove( textToRemove, fromText) {
   let foundMatch = false;
   let matchCount = 0;
 
-  do {
+//   do {
     foundMatch = false;
-    while( i < fromText.length) {
-      if(fromText[i] === textToRemove[i] ) {
+    i = 0;
+    matchIdx = 0;
+    
+    while( i < fromText.length && foundMatch == false) {
+      if(fromText[i] === matchString[i] ) {
         matchCount++;
-        matchIdx++;
-        if(matchCount > textToRemove.length) {
+        if(matchCount >= matchString.length) {
           // we have a match
           foundMatch = true;
           fromText = fromText.slice(0, matchIdx) 
-            + fromText.slice(matchIdx, matchIdx + matchCount); 
+            + fromText.slice(matchIdx, matchIdx + matchCount);
         }
       } else {
         matchIdx = i;
-        matchCount=0;
+        matchCount = 0;
       }
     }
-  while( foundMatch === true);
+
+    
+//   } while (foundMatch === true);
 
   return fromText;
-
 }
 
-
-console.log(remove(textToRemove, fromText));
+console.log("hello");
+var matchString = "ABC";
+var fromText = "ABCDEF";
+console.log( remove(matchString, fromText) );
