@@ -1,28 +1,26 @@
 // From XTivia
-// Installed npm packages: jquery underscore request express
-// jade shelljs passport http sys lodash async mocha chai sinon
-// sinon-chai moment connect validator restify ejs ws co when
-// helmet wrench brain mustache should backbone forever debug jsdom
+
+// Remove the matchString from the fromText String.
+// Can't use any library functions.
+// Works in O(n) time and O(1) space
 
 
 function remove( matchString, fromText) {
 
+  if(fromText === undefined)
+    return '';
   if(matchString === undefined)
     return fromText;
 
   matchString = matchString.split("");
   fromText = fromText.split("");
 
-  let i = 0; // index of current char in string
-  let matchCharIdx = 0; // index of current match in the matchString
-  let foundMatch = false;
-  let matchCount = 0;
+  let i = 0; // index of current char in fromText string
+  let matchCount = 0; // char count of current matching strings
   let matchStart = 0; // start index of match in fromText string
-
-  let x = 0;
+  let foundMatch = false; // Keep searching?
 
   do {
-
     foundMatch = false;
     i = 0; 
     matchCount = 0;
@@ -30,21 +28,19 @@ function remove( matchString, fromText) {
     
     while( i < fromText.length) {
       if(fromText[i] === matchString[matchCount] ) {
-        matchStart = matchCount === 0 ? i : matchStart;
+        matchStart = matchCount === 0 ? i : matchStart; // start of match or continue matching?
         matchCount++;
-//         matchCharIdx++;
-        if(matchCount >= matchString.length) {
-          // we have a match
-         
-          fromText = fromText.slice(0, Math.max(0, matchStart-1)) 
-            .concat( fromText.slice(matchStart+matchCount, fromText.length+1) );
+
+        if(matchCount >= matchString.length) { // we have a match
+          fromText = fromText.slice(0, Math.max(0, matchStart)) 
+            .concat( fromText.slice(matchStart + matchCount, fromText.length+1) );
+
           i = 0;
           matchCount = 0;
           matchStart = 0;
           foundMatch = true;
         }
       } else {
-//         matchCharIdx = 0;
         matchCount = 0;
         matchStart = i;
       }
@@ -52,14 +48,11 @@ function remove( matchString, fromText) {
       i++;
     }
     
-  } while (foundMatch === true || x++>100);
+  } while (foundMatch === true);
 
-  console.log(x);
 
-  return fromText;
+  return fromText.join("");
 }
 
-console.log("hello");
-var matchString = "ABC";
-var fromText = "ABCDEFABC";
-console.log( remove(matchString, fromText) );
+console.log( remove("Athanas", "Chris Athanas") ); // => "Chris "
+console.log( remove("ABC", "ABCXYZABCABC")); // => "XYZ"
