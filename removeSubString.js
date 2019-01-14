@@ -32,7 +32,7 @@ function remove( matchString, fromText) {
         matchCount++;
 
         if(matchCount >= matchString.length) { // we have a match
-          fromText = fromText.slice(0, Math.max(0, matchStart)) 
+          fromText = fromText.slice(0, Math.max(0, matchStart))  // Concat the left and right sides "ABC" - "B" => "AC"
             .concat( fromText.slice(matchStart + matchCount, fromText.length+1) );
 
           i = 0;
